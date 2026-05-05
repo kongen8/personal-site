@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>william lindholm</title>
+<meta name="description" content="William Lindholm. Founder of Daymaker. San Francisco / Oslo." />
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --fg: #d4d4d4;
+    --accent: #7cffb2;
+    --dim: #6b7280;
+    --prompt: #ffd479;
+    --link: #82c5ff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); }
+  body {
+    color: var(--fg);
+    font: 14px/1.55 ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono", Consolas, monospace;
+    padding: 28px 32px 80px;
+    min-height: 100%;
+    cursor: text;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+  .banner { color: var(--accent); white-space: pre; line-height: 1.05; font-size: 12px; margin-bottom: 14px; }
+  .muted { color: var(--dim); }
+  .accent { color: var(--accent); }
+  .prompt { color: var(--prompt); }
+  .link { color: var(--link); text-decoration: none; border-bottom: 1px dotted var(--link); cursor: pointer; }
+  .link:hover { background: rgba(130,197,255,.12); }
+  .ext::after { content: " ↗"; opacity: .7; font-size: .9em; }
+  #log > div { white-space: pre-wrap; word-break: break-word; }
+  #log .cmd { color: var(--fg); }
+  #log .out { color: var(--fg); margin-bottom: 8px; }
+  .row { display: flex; align-items: baseline; }
+  .row .ps1 { flex: 0 0 auto; margin-right: 8px; }
+  .input {
+    flex: 1 1 auto;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: var(--fg);
+    font: inherit;
+    caret-color: transparent;
+    padding: 0;
+  }
+  .caret {
+    display: inline-block;
+    width: 8px;
+    height: 1.05em;
+    background: var(--fg);
+    vertical-align: -2px;
+    margin-left: 1px;
+    animation: blink 1.05s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .typed { white-space: pre; }
+  hr.sep { border: 0; border-top: 1px dashed #2a2a2a; margin: 10px 0; }
+  ::selection { background: var(--accent); color: #000; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <pre class="banner">          _ _ _ _                   _ _           _ _           _
+__      _(_) | (_) __ _ _ __ ___   | (_)_ __   __| | |__   ___ | |_ __ ___
+\ \ /\ / / | | | |/ _` | '_ ` _ \  | | | '_ \ / _` | '_ \ / _ \| | '_ ` _ \
+ \ V  V /| | | | | (_| | | | | | | | | | | | | (_| | | | | (_) | | | | | | |
+  \_/\_/ |_|_|_|_|\__,_|_| |_| |_| |_|_|_| |_|\__,_|_| |_|\___/|_|_| |_| |_|
+</pre>
+
+  <div id="log"></div>
+
+  <div class="row" id="inputRow">
+    <span class="ps1"><span class="prompt">william@daymaker</span><span class="muted">:</span><span style="color:#82c5ff;">~</span><span class="muted">$</span></span>
+    <span class="typed" id="typed"></span><span class="caret" id="caret"></span>
+    <input class="input" id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus aria-label="terminal" style="position:absolute;left:-9999px;">
+  </div>
+</div>
+
+<script>
+const log = document.getElementById('log');
+const cmd = document.getElementById('cmd');
+const typed = document.getElementById('typed');
+
+const ps1 = `<span class="prompt">william@daymaker</span><span class="muted">:</span><span style="color:#82c5ff;">~</span><span class="muted">$</span> `;
+
+// ─────────────────────────────────────────────────────────────
+// CONTENT
+// ─────────────────────────────────────────────────────────────
+
+const PEOPLE = {
+  william: `<span class="accent">william lindholm</span>
+================
+
+  · founder, daymaker
+  · based: san francisco / oslo
+  · age: 20
+
+building daymaker. physical marketing for the AI age.
+
+<span class="muted">highlights:</span>
+  · at 17, broke telenor's all-time sales record (set over 40 years).
+  · 3rd in a national sales comp. 17 meetings booked in 4 hours,
+    including kpmg.
+
+try: <span class="link" data-cmd="whois daymaker">whois daymaker</span>  ·  <span class="link" data-cmd="press">press</span>  ·  <span class="link" data-cmd="cakes">cakes</span>  ·  <span class="link" data-cmd="books">books</span>  ·  <span class="link" data-cmd="contact">contact</span>`,
+
+  daymaker: `<span class="accent">daymaker</span>
+================
+
+  daymaker helps you get customers by sending cake.
+
+  physical marketing is the future. when email and phone get
+  oversaturated by AI, whoever collects the most data on what
+  sequence of outreach (digital + physical, combined) wins.
+
+  cake is a go-viral wedge. we're expanding into agentic commerce,
+  which will let you research and gift literally anything to anyone.
+
+  <span class="muted">started as jubelbud (oslo, 2025), rebranded to daymaker,
+  → san francisco → founders, inc. fellowship → here.</span>
+
+try: <span class="link" data-cmd="cakes">cakes</span>  ·  <span class="link" data-cmd="press">press</span>`
+};
+
+const PRESS = [
+  { flag:'🇺🇸', src:'Forbes',                a:'Sandy Carter',         t:'OpenAI called the one-person AI startup. And three founders proved it.', url:'https://www.forbes.com/sites/sandycarter/2026/04/04/openai-called-the-one-person-ai-startup-and-three-founders--proved-it/' },
+  { flag:'🇺🇸', src:'Inc.',                  a:'María Paula González',  t:'Let Them Pitch Cake: how this founder used AI to build a thriving cake business', url:'https://www.inc.com/mariapaula-gonzalez/this-founder-used-ai-to-build-a-thriving-business-out-of-customized-cake-pitches/91325967' },
+  { flag:'🇪🇺', src:'Sifted',                a:null,                    t:'Forget pitch decks, you need pitch cakes', url:'https://sifted.eu/articles/forget-pitch-decks-you-need-pitch-cakes' },
+  { flag:'🇳🇴', src:'NRK',                   a:null,                    t:'William (20) KI-kodet seg til Silicon Valley', url:'https://www.nrk.no/norge/william-_20_-ki-kodet-seg-til-silicon-valley-1.17788861' },
+  { flag:'🇳🇴', src:'VG · Dine Penger',      a:null,                    t:'AI-verktøy / vibe coding: bygger alt for deg', url:'https://www.vg.no/dinepenger/jobb/i/MnKMLm/ai-verktoey-vibe-coding-bygger-alt-for-deg' },
+  { flag:'🇳🇴', src:'Shifter',               a:null,                    t:'Coldcaking: slik sikret de møter med verdens mest ettertraktede investorer, med kake', url:'https://www.shifter.no/nyheter/coldcaking-slik-sikret-de-moter-med-verdens-mest-ettertraktede-investorer-med-kake/454999' },
+  { flag:'🇸🇪', src:'Aftonbladet',           a:null,                    t:"William, 19 fick en idé. Nu står kunderna på kö. \"Känns nästan som fusk.\"", url:'https://www.aftonbladet.se/minekonomi/a/73WaV8/william-19-fick-en-ide-nu-star-kunderna-pa-ko-kanns-nastan-som-fusk' },
+  { flag:'🇩🇰', src:'Ekstra Bladet',         a:null,                    t:'De bedste værktøjer til at score AI-millioner: \'Det føles næsten som snyd\'', url:'https://ekstrabladet.dk/penge/de-bedste-vaerktoejer-til-at-score-ai-millioner-det-foeles-naesten-som-snyd/10969753' },
+  { flag:'🇩🇪', src:'Business Insider · Gründerszene', a:null,           t:'Mit KI: 20-Jähriger baut 150.000-Dollar-Kuchen-Startup ohne Coding-Skills', url:'https://www.businessinsider.de/gruenderszene/news/mit-ki-20-jaehriger-baut-150-000-dollar-kuchen-startup-ohne-coding-skills/' },
+  { flag:'🇹🇷', src:'CNN Türk',              a:'Çiğdem Öztabak',         t:"Silikon Vadisi'nde dikkat çekmenin beklenmedik yolu", url:'https://www.cnnturk.com/yazarlar/guncel/cigdem-oztabak/silikon-vadisinde-dikkat-cekmenin-beklenmedik-yolu-yatirimcilara-pasta-gonderen-girisim-2405468' },
+  { flag:'🇮🇳', src:'Republic World',        a:null,                    t:'Emails are boring: US investor receives the sweetest pitch, frosted on a giant cake', url:'https://www.republicworld.com/viral/emails-are-boring-us-investor-receives-company-pitch-at-his-office-frosted-on-a-giant-cake' },
+  { flag:'🌐', src:'Smart Branding',        a:null,                    t:'When a startup outgrows its name: why Jubelbud became Daymaker.com', url:'https://smartbranding.com/when-a-startup-outgrows-its-name-why-jubelbud-became-daymaker-com/' },
+  { flag:'🇪🇺', src:'EU-Startups',           a:null,                    t:'Daymaker (directory)', url:'https://www.eu-startups.com/directory/daymaker/' },
+  { flag:'📺', src:'YouTube',               a:null,                    t:'How he vibe-coded a $150K/year cake business', url:'https://www.youtube.com/watch?v=9m7_OIhJEGM' },
+  { flag:'📺', src:'siliconmania.tv',       a:null,                    t:'Featured segment', url:'https://siliconmania.tv' }
+];
+
+const CAKES = [
+  "sphinxhq.com",
+  "cherry.vc",
+  "rippling.com",
+  "monk.com",
+  "archy.com",
+  "browserbase.com",
+  "deel.com",
+  "f.inc"
+];
+
+const BOOKS = [
+  { stars:5, t:"The Hard Thing About Hard Things",                    a:"Ben Horowitz",          n:"one of my favorites." },
+  { stars:5, t:"Can't Hurt Me",                                       a:"David Goggins" },
+  { stars:5, t:"The Almanack of Naval Ravikant",                      a:"Eric Jorgenson" },
+  { stars:5, t:"How to Win Friends & Influence People",               a:"Dale Carnegie" },
+  { stars:5, t:"Peer Gynt / En Folkefiende / Vildanden",              a:"Henrik Ibsen" },
+  { stars:5, t:"En Folkefiende",                                      a:"Henrik Ibsen" },
+  { stars:5, t:"AI is Good for You",                                  a:"Eric Jang",             n:"good." },
+  { stars:4, t:"Thinking, Fast and Slow",                             a:"Daniel Kahneman" },
+  { stars:4, t:"The 7 Habits of Highly Effective People",             a:"Stephen R. Covey" },
+  { stars:4, t:"How to Become a People Magnet / How to Talk to Anyone", a:"Mark Reklau & Leil Lowndes" },
+  { stars:4, t:"Gengangere",                                          a:"Henrik Ibsen" },
+  { stars:3, t:"Startup-käsikirja",                                   a:"Timo Ahopelto",         n:"pretty basic." },
+  { stars:3, t:"Det blåøyde riket: Norske tillitspatologier",          a:"Nina Witoszek" },
+  { stars:3, t:"The 48 Laws of Power",                                a:"Robert Greene" },
+  { stars:3, t:"No Bullsh*t Change",                                  a:"Chris Hirst" },
+  { stars:2, t:"It Ends with Us",                                     a:"Colleen Hoover" },
+  { stars:2, t:"Demokrati i trøbbel",                                 a:"Bård Larsen" },
+  { stars:2, t:"The Art of Seduction",                                a:"Robert Greene" },
+  { stars:0, t:"Fundraising",                                         a:"Ryan Breslow" },
+  { stars:0, t:"New Thought Super Pack #1",                           a:"Warren Lapine" }
+];
+
+const FILES = {
+  'about.txt':    () => stripTags(PEOPLE.william),
+  'daymaker.txt': () => stripTags(PEOPLE.daymaker),
+  'press.md':     () => PRESS.map(p => `${p.flag}  ${p.src}${p.a?' · '+p.a:''}\n  "${p.t}"\n  ${p.url}`).join('\n\n'),
+  'cakes.txt':    () => "wall of cakes. brands we've fed:\n\n" + CAKES.map(c => '  · ' + c).join('\n'),
+  'books.txt':    () => 'reading list:\n\n' + BOOKS.map(b => `  ${'*'.repeat(b.stars)||'-'}  ${b.t} (${b.a})${b.n?'  // '+b.n:''}`).join('\n'),
+  'contact.txt': () => `email      : cwlindholm@gmail.com
+linkedin   : linkedin.com/in/william-daymaker
+x          : x.com/daymakerguy
+location   : san francisco / oslo`,
+  'now.txt': () => `currently:
+  · running daymaker (sf / oslo)
+  · scaling pitch-cakes into agentic commerce
+  · always open to good people
+
+last updated: ${new Date().toISOString().slice(0,10)}`,
+  'readme.md': () => `welcome.
+
+this is a personal site, modeled after a unix shell.
+type \`help\` to see what's here, or \`ls\` to list files.
+
+shortcuts: whois william · whois daymaker · press · books · cakes · contact`
+};
+
+// ─────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────
+
+function escapeHTML(s){
+  return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+}
+function stripTags(s){
+  return String(s).replace(/<[^>]+>/g, '');
+}
+function extLink(url, label){
+  return `<a class="link ext" href="${url}" target="_blank" rel="noopener">${escapeHTML(label||url)}</a>`;
+}
+function niceUrl(u){
+  return u.replace(/^https?:\/\//,'').replace(/\/$/,'').replace(/(.{50}).+/, '$1...');
+}
+
+// ─────────────────────────────────────────────────────────────
+// COMMANDS
+// ─────────────────────────────────────────────────────────────
+
+const COMMANDS = {
+  help: () => `<span class="muted">about</span>
+
+  <span class="accent">whois william</span>     about me
+  <span class="accent">whois daymaker</span>    about the company
+  <span class="accent">work</span>              experience
+  <span class="accent">now</span>               what i'm up to
+
+<span class="muted">daymaker</span>
+
+  <span class="accent">cakes</span>             a few brands we've fed
+  <span class="accent">press</span>             press coverage
+
+<span class="muted">life</span>
+
+  <span class="accent">books</span>             reading list
+
+<span class="muted">contact</span>
+
+  <span class="accent">contact</span>           reach me
+  <span class="accent">email</span> · <span class="accent">linkedin</span> · <span class="accent">x</span>
+
+<span class="muted">files & shell</span>
+
+  <span class="accent">ls</span>  ·  <span class="accent">cat</span> &lt;file&gt;  ·  <span class="accent">whoami</span>  ·  <span class="accent">date</span>  ·  <span class="accent">echo</span>  ·  <span class="accent">clear</span>
+  <span class="accent">theme</span> &lt;name&gt;     dark · light · matrix
+  <span class="muted">your favorite unix commands work too. mostly.</span>`,
+
+  ls: () => Object.keys(FILES).map(f => `<span class="link" data-cmd="cat ${f}">${f}</span>`).join('   '),
+  cat: (args) => {
+    if (!args.length) return 'usage: cat &lt;file&gt;';
+    const name = args[0];
+    if (FILES[name]) {
+      const v = FILES[name];
+      return escapeHTML(typeof v === 'function' ? v() : v);
+    }
+    return `cat: ${escapeHTML(name)}: no such file. try 'ls'.`;
+  },
+
+  whois: (args) => {
+    const k = (args[0]||'').toLowerCase();
+    if (!k) return 'usage: whois &lt;name&gt;   try: <span class="link" data-cmd="whois william">whois william</span>  ·  <span class="link" data-cmd="whois daymaker">whois daymaker</span>';
+    if (PEOPLE[k]) return PEOPLE[k];
+    return `whois: no entry for '${escapeHTML(k)}'. try: william, daymaker`;
+  },
+
+  press: () => {
+    const countries = new Set(PRESS.map(p => p.flag).filter(f => /[\u{1F1E6}-\u{1F1FF}]/u.test(f))).size;
+    const head = `<span class="accent">press</span>  <span class="muted">(${PRESS.length} pieces · ${countries} countries · 6 languages)</span>\n${'-'.repeat(60)}\n`;
+    const rows = PRESS.map((p, i) => {
+      const num = `<span class="muted">${String(i+1).padStart(2,'0')}.</span>`;
+      const author = p.a ? `  <span class="muted">· ${escapeHTML(p.a)}</span>` : '';
+      return `${num}  ${p.flag}  <span class="accent">${escapeHTML(p.src)}</span>${author}\n` +
+             `      <span class="prompt">"${escapeHTML(p.t)}"</span>\n` +
+             `      ${extLink(p.url, niceUrl(p.url))}`;
+    }).join('\n\n');
+    return head + '\n' + rows;
+  },
+
+  books: () => {
+    const head = `<span class="accent">reading list</span>  <span class="muted">(${BOOKS.length} books · live on goodreads)</span>\n${'-'.repeat(60)}\n`;
+    const rated = BOOKS.filter(b => b.stars > 0);
+    const unrated = BOOKS.filter(b => b.stars === 0);
+    const rows = rated.map(b => {
+      const stars = '<span class="prompt">' + '★'.repeat(b.stars) + '</span>' + '<span class="muted">' + '·'.repeat(5-b.stars) + '</span>';
+      const note = b.n ? `  <span class="muted">// ${escapeHTML(b.n)}</span>` : '';
+      return `  ${stars}  <span class="accent">${escapeHTML(b.t)}</span>\n          <span class="muted">${escapeHTML(b.a)}</span>${note}`;
+    }).join('\n\n');
+    const unratedRows = unrated.length ? `\n\n<span class="muted">also read (no rating yet):</span>\n` + unrated.map(b => `  · <span>${escapeHTML(b.t)}</span>  <span class="muted">(${escapeHTML(b.a)})</span>`).join('\n') : '';
+    return head + '\n' + rows + unratedRows + `\n\n  ${extLink('https://www.goodreads.com/user/show/197156149-william-lindholm', 'goodreads.com/user/show/197156149-william-lindholm')}`;
+  },
+  reading: () => COMMANDS.books([]),
+
+  cakes: () => {
+    const rows = CAKES.map(d => `  · ${extLink('https://' + d, d)}`).join('\n');
+    return `<span class="accent">a slice of the wall of cakes 🎂</span>\n${rows}\n\n<span class="muted">a few of the brands we've sent cake to.</span>`;
+  },
+
+  customers: () => COMMANDS.cakes([]),
+  tldr: () => COMMANDS.cakes([]),
+
+  work: () => `<span class="accent">work</span>
+============================================================
+
+<span class="prompt">oct 2025 - present</span>   <span class="accent">founder</span>
+                     daymaker  ·  sf / oslo
+                     mar 2026: $10k rev   apr 2026: $120k rev
+                     the future of marketing is physical; whoever
+                     has the most data on what works, wins.
+
+<span class="prompt">jun 2024 - may 2026</span>   <span class="accent">board member, head of partnerships</span>
+                     young ambassadors  ·  norway
+                     mentorship program for young entrepreneurs
+                     and politicians. partnerships with mckinsey
+                     & co, the u.s. embassy, first house consulting,
+                     and norwegian lawfirms bahr and elden.
+
+<span class="prompt">jul 2024 - dec 2024</span>   <span class="accent">co-founder</span>
+                     bty
+                     company is now doing $3m arr.
+
+<span class="prompt">jan 2024 - sep 2024</span>   <span class="accent">sales</span>
+                     telenor  ·  norway
+                     ath best salesrep at norway's largest telecom.
+                     at 17, broke a 40-year sales record.
+
+<span class="prompt">nov 2022 - oct 2025</span>   <span class="accent">political board roles</span>
+                     · akershus unge høyre, board member  (oct 24 - oct 25)
+                     · nedre romerike unge høyre, chair    (nov 22 - nov 24)
+                     · lillestrøm ungdomsråd, chair         (jan 22 - nov 25)
+
+<span class="prompt">nov 2022 - mar 2023</span>   <span class="accent">sales</span>
+                     schmekel
+                     first job. became top rep in norway and sweden.`,
+
+  now: () => COMMANDS.cat(['now.txt']),
+  contact: () => COMMANDS.cat(['contact.txt']),
+  readme: () => COMMANDS.cat(['readme.md']),
+  about: () => COMMANDS.whois(['william']),
+
+  whoami: () => 'william lindholm',
+  date: () => new Date().toString(),
+  pwd: () => '/home/william',
+  uname: () => 'daymaker-os 1.0.0',
+  echo: (args) => escapeHTML(args.join(' ')),
+
+  email:    () => { window.open('mailto:cwlindholm@gmail.com', '_blank', 'noopener'); return 'opening email...'; },
+  linkedin: () => { window.open('https://www.linkedin.com/in/william-daymaker/', '_blank', 'noopener'); return 'opening linkedin...'; },
+  x:        () => { window.open('https://x.com/daymakerguy', '_blank', 'noopener'); return 'opening x...'; },
+  twitter:  () => COMMANDS.x([]),
+  goodreads:() => { window.open('https://www.goodreads.com/user/show/197156149-william-lindholm', '_blank', 'noopener'); return 'opening goodreads...'; },
+
+  open: (args) => {
+    const t = (args[0]||'').toLowerCase();
+    if (['email','linkedin','x','twitter','goodreads'].includes(t)) return COMMANDS[t]([]);
+    return `open: unknown target '${escapeHTML(args[0]||'')}'. try: email, linkedin, x, goodreads`;
+  },
+
+  theme: (args) => {
+    const t = (args[0]||'').toLowerCase();
+    const themes = {
+      dark:   { bg:'#0d0d0d', fg:'#d4d4d4', accent:'#7cffb2' },
+      light:  { bg:'#f5f1e8', fg:'#1a1a1a', accent:'#1f6feb' },
+      matrix: { bg:'#000',    fg:'#00ff66', accent:'#00ff66' }
+    };
+    if (!themes[t]) return `theme: unknown theme '${escapeHTML(args[0]||'')}'. try: dark, light, matrix`;
+    const r = document.documentElement.style;
+    Object.entries(themes[t]).forEach(([k,v]) => r.setProperty('--'+k, v));
+    return `theme set to ${t}.`;
+  },
+
+  clear: () => { log.innerHTML = ''; return null; },
+
+  gmi: () => { gmiUpgrade(); return null; },
+  upgrade: () => COMMANDS.gmi([]),
+  welcome: () => {
+    print('<span class="muted">launching 1998 edition...</span>');
+    setTimeout(() => { window.location.href = './welcome.htm'; }, 700);
+    return null;
+  },
+  exit: () => COMMANDS.welcome([]),
+  jobs: () => `<span class="accent">open jobs at daymaker</span>
+============================================================
+
+  · we're a small team. always open to good people.
+  · email <a class="link ext" href="mailto:cwlindholm@gmail.com">cwlindholm@gmail.com</a> with what you'd build.
+
+[ swap this for real listings whenever you want. ]`,
+
+  // easter eggs
+  cake:   () => "🎂 try '<span class=\"link\" data-cmd=\"cakes\">cakes</span>' for the wall.",
+  sudo:   () => "nice try.",
+  rm:     () => "rm: i'm not letting you do that.",
+  vim:    () => "vim: to exit, just close the tab. (you wouldn't believe how often that works.)",
+  emacs:  () => "have you considered vim?",
+  quit:   () => COMMANDS.welcome([]),
+  man:    (args) => args[0] ? `man: no manual entry for ${escapeHTML(args[0])}. try 'help'.` : "what manual page do you want?",
+  woman:  (args) => COMMANDS.man(args),
+  ssh:    () => "ssh: connection refused (this is a static site).",
+  curl:   () => "curl: try a real shell for that one.",
+  ps:     () => "  PID  CMD\n    1  william\n    2  daymaker\n    3  espresso",
+  top:    () => COMMANDS.ps([]),
+  history:() => history.map((h,i) => `  ${String(i+1).padStart(3,' ')}  ${escapeHTML(h)}`).join('\n') || '(no history yet)',
+  cd:     () => '',
+  ll:     () => COMMANDS.ls([]),
+  hi:     () => 'hi 👋',
+  hello:  () => 'hello 👋'
+};
+
+// ─────────────────────────────────────────────────────────────
+// IO
+// ─────────────────────────────────────────────────────────────
+
+function print(html, cls='out') {
+  const div = document.createElement('div');
+  div.className = cls;
+  div.innerHTML = html;
+  log.appendChild(div);
+}
+function printPrompt(line){
+  print(ps1 + `<span class="cmd">${escapeHTML(line)}</span>`, 'cmd');
+}
+
+const history = [];
+let histIdx = 0;
+
+function run(line){
+  const trimmed = line.trim();
+  printPrompt(line);
+  if (!trimmed) return;
+  history.push(trimmed); histIdx = history.length;
+  const [name, ...args] = trimmed.split(/\s+/);
+  const fn = COMMANDS[name.toLowerCase()];
+  if (!fn) {
+    print(`<span>${escapeHTML(name)}: command not found. try <span class="accent">help</span>.</span>`);
+    return;
+  }
+  const out = fn(args);
+  if (out !== null && out !== undefined) print(out);
+}
+
+function syncTyped(){ typed.textContent = cmd.value; }
+
+// ─────────────────────────────────────────────────────────────
+// GMI: long-form upgrade sequence
+// ─────────────────────────────────────────────────────────────
+
+let isUpgrading = false;
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+async function downloadStep(label){
+  print(`<span class="prompt">==&gt;</span> <span class="muted">${escapeHTML(label)}</span>`);
+  const div = document.createElement('div');
+  div.className = 'out';
+  log.appendChild(div);
+  const total = 60;
+  const steps = 18 + Math.floor(Math.random()*8);
+  for (let i = 0; i <= steps; i++) {
+    const fill = Math.round((i/steps) * total);
+    const bar = '#'.repeat(fill) + ' '.repeat(total - fill);
+    const pct = Math.round((i/steps) * 100);
+    div.innerHTML = `[${bar}] ${String(pct).padStart(3,' ')}%`;
+    window.scrollTo(0, document.body.scrollHeight);
+    await sleep(35 + Math.random()*55);
+  }
+}
+
+async function gmiUpgrade(){
+  if (isUpgrading) return;
+  isUpgrading = true;
+  cmd.disabled = true;
+
+  print('');
+  print('<span class="muted">Welcome to the William terminal. Building cake-driven companies!</span>');
+  print('<span class="muted">Type </span><span class="accent">help</span><span class="muted"> to get started. Or type </span><span class="accent">welcome</span><span class="muted"> for the web version.</span>');
+  print('');
+  print('<span class="muted">Open jobs detected. Type </span><span class="accent">jobs</span><span class="muted"> for more info.</span>');
+  print('');
+  await sleep(450);
+
+  await downloadStep('Downloading https://daymaker.com/v2/manifests/2.0.0');
+  await sleep(120);
+  await downloadStep('Downloading https://ghcr.io/v2/williams/blobs/sha256:f1ndholm9c798355307b59992918e9a595c53072d7a29458dbe5b8d105b63d3dd1c0');
+  await sleep(120);
+  await downloadStep('Downloading from https://sifted.eu/articles/forget-pitch-decks-you-need-pitch-cakes');
+  await sleep(120);
+  await downloadStep('npm install daymaker@latest');
+  await sleep(450);
+
+  print('');
+  print('Calculating new metrics...');
+  await sleep(450);
+  print('Updated revenue (apr 26):     <span class="accent">$120k / mo</span>');
+  print('Updated press features:       <span class="accent">' + PRESS.length + '</span>');
+  print('Updated brands fed:           <span class="accent">' + CAKES.length + '</span>');
+  print('Updated office locations:     <span class="accent">SF + Oslo</span>');
+  print('Found mission:                <span class="prompt">Send cake. Get customers.</span>');
+  print('Thesis (no update):           <span class="prompt">Physical marketing &gt; AI email spam.</span>');
+  print('');
+  await sleep(350);
+  print('<span style="color:#82c5ff">You are now running William version 2.0.</span>');
+  print('');
+  print('To learn more about this release, RTFM at:');
+  print('<a class="link ext" href="https://www.daymaker.com" target="_blank" rel="noopener">https://www.daymaker.com</a>');
+  print('');
+  print('or remote into the bakery at:');
+  print('<a class="link ext" href="https://x.com/daymakerguy" target="_blank" rel="noopener">https://x.com/daymakerguy</a>');
+  print('');
+  print('Note that VERSION 2.0 is an unstable build of the operator.');
+  print('Please report any bugs you find. (or send cake.)');
+  print('');
+  print('<span class="muted">Type </span><span class="accent">help</span><span class="muted"> to get started. Or type </span><span class="accent">welcome</span><span class="muted"> for the 1998 web version.</span>');
+  print('');
+
+  isUpgrading = false;
+  cmd.disabled = false;
+  cmd.focus();
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+cmd.addEventListener('input', syncTyped);
+cmd.addEventListener('keydown', (e) => {
+  if (isUpgrading) { e.preventDefault(); return; }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const v = cmd.value;
+    cmd.value = ''; syncTyped();
+    run(v);
+    window.scrollTo(0, document.body.scrollHeight);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (history.length === 0) return;
+    histIdx = Math.max(0, histIdx - 1);
+    cmd.value = history[histIdx] || ''; syncTyped();
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    histIdx = Math.min(history.length, histIdx + 1);
+    cmd.value = history[histIdx] || ''; syncTyped();
+  } else if (e.key === 'l' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    log.innerHTML = '';
+  } else if (e.key === 'Tab') {
+    e.preventDefault();
+    const v = cmd.value;
+    const parts = v.split(/\s+/);
+    if (parts.length === 1) {
+      const m = Object.keys(COMMANDS).filter(k => k.startsWith(parts[0]));
+      if (m.length === 1) { cmd.value = m[0] + ' '; syncTyped(); }
+    } else if (parts[0] === 'cat') {
+      const m = Object.keys(FILES).filter(k => k.startsWith(parts[1]||''));
+      if (m.length === 1) { cmd.value = 'cat ' + m[0]; syncTyped(); }
+    } else if (parts[0] === 'whois') {
+      const m = Object.keys(PEOPLE).filter(k => k.startsWith(parts[1]||''));
+      if (m.length === 1) { cmd.value = 'whois ' + m[0]; syncTyped(); }
+    }
+  }
+});
+
+// click links inside output, click anywhere to focus input
+document.body.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-cmd]');
+  if (t) { run(t.getAttribute('data-cmd')); cmd.focus(); return; }
+  if (e.target.closest('a')) return; // let real anchor links work
+  if (window.getSelection().toString()) return;
+  cmd.focus();
+});
+
+// boot
+const boot = [
+  '<span class="prompt">New version of William detected.</span>',
+  '<span>Please upgrade your terminal with </span><span class="accent">gmi</span><span>.</span>',
+  '',
+  '<span>If not, type </span><span class="accent">help</span><span> for more commands.</span>',
+  '<hr class="sep">'
+];
+boot.forEach(h => print(h));
+cmd.focus();
+</script>
+</body>
+</html>
