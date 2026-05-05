@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>~ Welcome 2 William's HomePage ~</title>
+<meta name="generator" content="Microsoft FrontPage 4.0">
+<meta name="description" content="THE OFFICIAL HOMEPAGE OF WILLIAM LINDHOLM!!! FOUNDER OF DAYMAKER. CAKE EXPERT.">
+<style>
+  /* gif urls: geo-bootstrap by divshot, MIT */
+  html, body {
+    margin: 0;
+    background-image: url('https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/stars.gif');
+    background-color: #000033;
+    color: #ffff00;
+    font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+    font-size: 16px;
+    text-align: center;
+  }
+  a { color: #00ffff; }
+  a:visited { color: #ff00ff; }
+  a:hover { color: #ff0000; background: #ffff00; }
+  h1 {
+    background-image: url('https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/rainbow.gif');
+    background-repeat: repeat;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px #fff;
+    font-size: 56px;
+    line-height: 1;
+    margin: 8px 0;
+    letter-spacing: 1px;
+    font-family: "Impact", "Comic Sans MS", cursive;
+  }
+  h2 {
+    color: #ff00ff;
+    font-size: 28px;
+    text-shadow: 2px 2px 0 #ffff00, 4px 4px 0 #00ffff;
+    margin: 20px 0 8px;
+  }
+  h3 {
+    color: #00ff00;
+    font-size: 22px;
+    text-shadow: 2px 2px 0 #ff00ff;
+  }
+  .blink { animation: blink 0.8s steps(2, start) infinite; }
+  @keyframes blink { to { visibility: hidden; } }
+  .marquee {
+    background: #000;
+    color: #ffff00;
+    border: 4px ridge #ff00ff;
+    padding: 6px 0;
+    font-weight: bold;
+    font-size: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll 22s linear infinite;
+  }
+  @keyframes scroll { to { transform: translateX(-100%); } }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #000099;
+    border: 6px outset #ff00ff;
+    padding: 18px;
+    box-shadow: 12px 12px 0 #ff00ff;
+  }
+  .badges img { vertical-align: middle; margin: 4px; border: 0; }
+  .panel {
+    background: #ffffcc;
+    color: #000080;
+    border: 4px ridge #ff00ff;
+    padding: 14px 18px;
+    margin: 14px 0;
+    text-align: left;
+    box-shadow: 6px 6px 0 #ff0000;
+    font-size: 16px;
+  }
+  .panel h3 { margin-top: 0; }
+  .panel a { color: #0000ff; }
+  .panel a:visited { color: #800080; }
+
+  /* plain bulleted list (no hearts) */
+  ul.plain {
+    list-style: square;
+    padding-left: 22px;
+    color: #000080;
+  }
+  ul.plain li { padding: 3px 0; }
+
+  /* press cards */
+  .press-card {
+    background: #fff;
+    border: 3px ridge #00ffff;
+    padding: 10px 12px;
+    margin: 8px 0;
+    box-shadow: 4px 4px 0 #ff00ff;
+    color: #000;
+    font-size: 14px;
+  }
+  .press-card .flag { font-size: 22px; vertical-align: middle; margin-right: 6px;}
+  .press-card .src { font-weight: bold; color: #ff0080; font-size: 16px;}
+  .press-card .author { color: #444; font-style: italic; margin-left: 6px;}
+  .press-card .head { display: block; margin: 6px 0 4px; color: #000080; font-size: 15px;}
+  .press-card a { color: #0000ff; }
+  .press-card a:visited { color: #800080; }
+
+  /* book row */
+  .book-row {
+    border-bottom: 1px dashed #aaa;
+    padding: 6px 0;
+    color: #000080;
+  }
+  .book-row:last-child { border-bottom: 0; }
+  .book-stars { color: #ff8800; font-weight: bold; letter-spacing: 1px;}
+  .book-title { font-weight: bold; color: #000; }
+  .book-note { color: #666; font-style: italic; margin-left: 6px;}
+
+  /* work timeline */
+  .work-row {
+    border-left: 4px ridge #ff00ff;
+    padding: 6px 12px;
+    margin: 10px 0;
+    background: #fffbe6;
+    color: #000080;
+  }
+  .work-row .when { color: #ff0080; font-weight: bold; font-size: 13px;}
+  .work-row .role { font-weight: bold; color: #000; font-size: 17px;}
+  .work-row .at { color: #444; font-size: 14px;}
+  .work-row .note { display: block; color: #555; font-size: 14px; margin-top: 4px;}
+
+  hr.rainbow {
+    border: 0;
+    height: 14px;
+    background: url('https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/rainbow.gif') repeat-x;
+    margin: 20px 0;
+  }
+  hr.flames {
+    border: 0;
+    height: 28px;
+    background: url('https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/flames.gif') repeat-x;
+    margin: 20px 0;
+  }
+  .toolbar {
+    background: #c0c0c0;
+    border: 2px outset #ffffff;
+    padding: 6px;
+    text-align: left;
+    font-size: 13px;
+    color: #000;
+  }
+  .toolbar a { color: #0000ff; }
+  .counter {
+    display: inline-block;
+    padding: 6px;
+    background: #000;
+    border: 2px inset #888;
+    color: #ff0;
+    font-family: "Courier New", monospace;
+    font-size: 22px;
+    letter-spacing: 4px;
+  }
+  .return {
+    display: inline-block;
+    background: #ff00ff;
+    color: #ffff00 !important;
+    border: 4px outset #ffffff;
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+  }
+  .return:hover { background: #00ffff; color: #000 !important; }
+  .small { font-size: 12px; color: #444; }
+  .center { text-align: center; }
+  .signoff {
+    color: #fff;
+    font-size: 13px;
+    padding-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="./index.html">&laquo; back to the modern site</a>
+  &nbsp;|&nbsp; bookmark me!! &nbsp;|&nbsp; print this page &nbsp;|&nbsp; tell a friend!! &nbsp;|&nbsp;
+  <span style="float:right;">last updated: 5/4/26 ~ 1:15 PM PST</span>
+</div>
+
+<div class="container">
+
+  <div class="badges">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/ns_logo.gif" alt="netscape">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/ie_logo.gif" alt="ie">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/noframes.gif" alt="no frames">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/notepad.gif" alt="notepad">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/yahooweek.gif" alt="cool site">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/hot.gif" alt="hot">
+  </div>
+
+  <h1>~ Welcome 2 William's HomePage ~</h1>
+  <p style="color:#fff; font-size:18px;">
+    🎂 <b>FOUNDER OF DAYMAKER</b> 🎂 &nbsp;<span class="blink" style="color:#ff0;">*</span>&nbsp; SF // OSLO &nbsp;<span class="blink" style="color:#0ff;">*</span>&nbsp; AGE 20
+  </p>
+
+  <p>
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/spinningearth.gif" alt="spinning earth" height="80">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/wabwalk.gif" alt="walking" height="60">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/spinningearth.gif" alt="spinning earth" height="80">
+  </p>
+
+  <div class="marquee"><span>★ ★ ★ &nbsp; W E L C O M E &nbsp; T 0 &nbsp; T H E &nbsp; B A K E R Y &nbsp; ★ ★ ★ &nbsp;&nbsp; PITCH CAKES ARE THE FUTURE!!!! &nbsp;&nbsp; ★ ★ ★ &nbsp; PHYSICAL MARKETING &gt; AI EMAIL SPAM &nbsp; ★ ★ ★ &nbsp; NOW ACCEPTING ORDERS!! &nbsp; ★ ★ ★ &nbsp; SF / OSLO &nbsp; ★ ★ ★</span></div>
+
+  <hr class="rainbow">
+
+  <!-- ABOUT ME -->
+  <div class="panel">
+    <h3>* ABOUT ME!! * <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/new.gif" alt="NEW" style="vertical-align:middle;"></h3>
+    <p>
+      Hi! My name is <b>William Lindholm</b> and welcome to my HomePage on the World Wide Web!!
+      I am <b>20 years old</b> and I live in <b>San Francisco</b> AND <b>Oslo</b>! :)
+      I am the founder of a company called <b>DAYMAKER</b> where we send <b>CAKE</b> to your customers!!!
+    </p>
+    <p>FUN FACTS ABOUT ME:</p>
+    <ul class="plain">
+      <li>At age <b>17</b>, I broke the all-time sales record at <b>Telenor</b> (Norway's largest telecom). It had stood for <b>40 years</b>!! 🇳🇴</li>
+      <li>3rd place in a <b>national sales competition</b>. Booked <b>17 meetings in 4 hours</b>, including one with <b>KPMG</b>!! 🏆</li>
+      <li>I think email is dead. Send a <b>CAKE</b> instead. 🎂</li>
+      <li>Bilingual: English &amp; Norwegian. <b>God dag!</b></li>
+    </ul>
+  </div>
+
+  <!-- THE COMPANY -->
+  <div class="panel" style="background:#ffe4f0; box-shadow: 6px 6px 0 #00ffff;">
+    <h3>* MY COMPANY: <span style="color:#ff0080;">DAYMAKER</span>!!! *
+      <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/hot.gif" alt="HOT" style="vertical-align:middle;">
+    </h3>
+    <p>
+      <b>"We help you get customers by sending cake."</b>
+    </p>
+    <p>
+      Physical marketing is the FUTURE. When email and phone get oversaturated by AI,
+      whoever collects the most data on what sequence of outreach (digital + physical, combined) wins.
+    </p>
+    <p>
+      🎂 Cake is a go-viral wedge. We're expanding into <b>agentic commerce</b>, which will let you
+      research and gift literally <i>anything</i> to anyone!
+    </p>
+    <p class="center">
+      <a href="https://www.daymaker.com" target="_blank">&gt;&gt; CLICK HERE 4 DAYMAKER &lt;&lt;</a>
+    </p>
+  </div>
+
+  <hr class="flames">
+
+  <!-- WORK HISTORY -->
+  <div class="panel" style="background:#fffbe6;">
+    <h3>* MY WORK HISTORY!! *</h3>
+
+    <div class="work-row">
+      <div><span class="when">OCT 2025 - PRESENT</span></div>
+      <div><span class="role">Founder</span> <span class="at">@ Daymaker (SF / Oslo)</span></div>
+      <span class="note">Mar '26: $10k rev. Apr '26: $120k rev. The future of marketing is physical, and whoever has the most data on what works, wins.</span>
+    </div>
+
+    <div class="work-row">
+      <div><span class="when">JUN 2024 - MAY 2026</span></div>
+      <div><span class="role">Board Member, Head of Partnerships</span> <span class="at">@ Young Ambassadors</span></div>
+      <span class="note">Mentorship program for young entrepreneurs and politicians. Partnerships with McKinsey &amp; Company, the U.S. Embassy, First House Consulting, and Norwegian lawfirms BAHR and Elden.</span>
+    </div>
+
+    <div class="work-row">
+      <div><span class="when">JUL 2024 - DEC 2024</span></div>
+      <div><span class="role">Co-founder</span> <span class="at">@ BTY</span></div>
+      <span class="note">Company is now doing $3M ARR.</span>
+    </div>
+
+    <div class="work-row">
+      <div><span class="when">JAN 2024 - SEP 2024</span></div>
+      <div><span class="role">Sales</span> <span class="at">@ Telenor (Norway's largest telecom)</span></div>
+      <span class="note">ATH best salesrep. At 17, broke a 40-year sales record.</span>
+    </div>
+
+    <div class="work-row">
+      <div><span class="when">NOV 2022 - OCT 2025</span></div>
+      <div><span class="role">Political Board Roles</span> <span class="at">(Chair / Member)</span></div>
+      <span class="note">
+        - Akershus Unge Høyre, Board Member (Oct 2024 - Oct 2025)<br>
+        - Nedre Romerike Unge Høyre, Chair of Board (Nov 2022 - Nov 2024)<br>
+        - Lillestrøm Ungdomsråd, Chair of Board (Jan 2022 - Nov 2025)
+      </span>
+    </div>
+
+    <div class="work-row">
+      <div><span class="when">NOV 2022 - MAR 2023</span></div>
+      <div><span class="role">Sales</span> <span class="at">@ Schmekel</span></div>
+      <span class="note">First job. Became top rep in Norway and Sweden.</span>
+    </div>
+  </div>
+
+  <hr class="rainbow">
+
+  <!-- PRESS -->
+  <div class="panel" style="background:#e6ffe6;">
+    <h3>* AS SEEN ON THE WEB!!! *
+      <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/new2.gif" alt="NEW" height="22" style="vertical-align:middle;">
+    </h3>
+
+    <div class="press-card">
+      <span class="flag">🇺🇸</span><span class="src">Forbes</span><span class="author">- Sandy Carter</span>
+      <span class="head">"OpenAI called the one-person AI startup. And three founders proved it."</span>
+      <a href="https://www.forbes.com/sites/sandycarter/2026/04/04/openai-called-the-one-person-ai-startup-and-three-founders--proved-it/" target="_blank">forbes.com</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇺🇸</span><span class="src">Inc.</span><span class="author">- María Paula González</span>
+      <span class="head">"Let Them Pitch Cake: how this founder used AI to build a thriving cake business"</span>
+      <a href="https://www.inc.com/mariapaula-gonzalez/this-founder-used-ai-to-build-a-thriving-business-out-of-customized-cake-pitches/91325967" target="_blank">inc.com</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇪🇺</span><span class="src">Sifted</span>
+      <span class="head">"Forget pitch decks, you need pitch cakes"</span>
+      <a href="https://sifted.eu/articles/forget-pitch-decks-you-need-pitch-cakes" target="_blank">sifted.eu</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇳🇴</span><span class="src">NRK</span>
+      <span class="head">"William (20) KI-kodet seg til Silicon Valley"</span>
+      <a href="https://www.nrk.no/norge/william-_20_-ki-kodet-seg-til-silicon-valley-1.17788861" target="_blank">nrk.no</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇳🇴</span><span class="src">VG</span><span class="author">/ Dine Penger</span>
+      <span class="head">"AI-verktøy / vibe coding: bygger alt for deg"</span>
+      <a href="https://www.vg.no/dinepenger/jobb/i/MnKMLm/ai-verktoey-vibe-coding-bygger-alt-for-deg" target="_blank">vg.no</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇳🇴</span><span class="src">Shifter</span>
+      <span class="head">"Coldcaking: slik sikret de møter med verdens mest ettertraktede investorer, med kake"</span>
+      <a href="https://www.shifter.no/nyheter/coldcaking-slik-sikret-de-moter-med-verdens-mest-ettertraktede-investorer-med-kake/454999" target="_blank">shifter.no</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇸🇪</span><span class="src">Aftonbladet</span>
+      <span class="head">"William, 19 fick en idé. Nu står kunderna på kö. Känns nästan som fusk."</span>
+      <a href="https://www.aftonbladet.se/minekonomi/a/73WaV8/william-19-fick-en-ide-nu-star-kunderna-pa-ko-kanns-nastan-som-fusk" target="_blank">aftonbladet.se</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇩🇰</span><span class="src">Ekstra Bladet</span>
+      <span class="head">"De bedste værktøjer til at score AI-millioner: 'Det føles næsten som snyd'"</span>
+      <a href="https://ekstrabladet.dk/penge/de-bedste-vaerktoejer-til-at-score-ai-millioner-det-foeles-naesten-som-snyd/10969753" target="_blank">ekstrabladet.dk</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇩🇪</span><span class="src">Business Insider · Gründerszene</span>
+      <span class="head">"Mit KI: 20-Jähriger baut 150.000-Dollar-Kuchen-Startup ohne Coding-Skills"</span>
+      <a href="https://www.businessinsider.de/gruenderszene/news/mit-ki-20-jaehriger-baut-150-000-dollar-kuchen-startup-ohne-coding-skills/" target="_blank">businessinsider.de</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇹🇷</span><span class="src">CNN Türk</span><span class="author">- Çiğdem Öztabak</span>
+      <span class="head">"Silikon Vadisi'nde dikkat çekmenin beklenmedik yolu"</span>
+      <a href="https://www.cnnturk.com/yazarlar/guncel/cigdem-oztabak/silikon-vadisinde-dikkat-cekmenin-beklenmedik-yolu-yatirimcilara-pasta-gonderen-girisim-2405468" target="_blank">cnnturk.com</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇮🇳</span><span class="src">Republic World</span>
+      <span class="head">"Emails are boring: US investor receives the sweetest pitch, frosted on a giant cake"</span>
+      <a href="https://www.republicworld.com/viral/emails-are-boring-us-investor-receives-company-pitch-at-his-office-frosted-on-a-giant-cake" target="_blank">republicworld.com</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🌐</span><span class="src">Smart Branding</span>
+      <span class="head">"When a startup outgrows its name: why Jubelbud became Daymaker.com"</span>
+      <a href="https://smartbranding.com/when-a-startup-outgrows-its-name-why-jubelbud-became-daymaker-com/" target="_blank">smartbranding.com</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">📺</span><span class="src">YouTube</span>
+      <span class="head">"How he vibe-coded a $150K/year cake business"</span>
+      <a href="https://www.youtube.com/watch?v=9m7_OIhJEGM" target="_blank">youtube.com</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">📺</span><span class="src">siliconmania.tv</span>
+      <span class="head">Featured segment</span>
+      <a href="https://siliconmania.tv" target="_blank">siliconmania.tv</a>
+    </div>
+
+    <div class="press-card">
+      <span class="flag">🇪🇺</span><span class="src">EU-Startups</span>
+      <span class="head">Daymaker (directory)</span>
+      <a href="https://www.eu-startups.com/directory/daymaker/" target="_blank">eu-startups.com</a>
+    </div>
+  </div>
+
+  <hr class="flames">
+
+  <!-- BOOKS -->
+  <div class="panel" style="background:#fff3e0;">
+    <h3>* BOOKS I'VE READ!! *</h3>
+    <p>20 books. Live shelf at <a href="https://www.goodreads.com/user/show/197156149-william-lindholm" target="_blank">goodreads</a>.</p>
+
+    <div class="book-row"><span class="book-stars">*****</span> <span class="book-title">The Hard Thing About Hard Things</span> by Ben Horowitz <span class="book-note">"one of my favorites."</span></div>
+    <div class="book-row"><span class="book-stars">*****</span> <span class="book-title">Can't Hurt Me</span> by David Goggins</div>
+    <div class="book-row"><span class="book-stars">*****</span> <span class="book-title">The Almanack of Naval Ravikant</span> by Eric Jorgenson</div>
+    <div class="book-row"><span class="book-stars">*****</span> <span class="book-title">How to Win Friends &amp; Influence People</span> by Dale Carnegie</div>
+    <div class="book-row"><span class="book-stars">*****</span> <span class="book-title">Peer Gynt / En Folkefiende / Vildanden</span> by Henrik Ibsen</div>
+    <div class="book-row"><span class="book-stars">*****</span> <span class="book-title">En Folkefiende</span> by Henrik Ibsen</div>
+    <div class="book-row"><span class="book-stars">*****</span> <span class="book-title">AI is Good for You</span> by Eric Jang <span class="book-note">"good."</span></div>
+    <div class="book-row"><span class="book-stars">**** </span> <span class="book-title">Thinking, Fast and Slow</span> by Daniel Kahneman</div>
+    <div class="book-row"><span class="book-stars">**** </span> <span class="book-title">The 7 Habits of Highly Effective People</span> by Stephen R. Covey</div>
+    <div class="book-row"><span class="book-stars">**** </span> <span class="book-title">How to Become a People Magnet / How to Talk to Anyone</span> by Reklau &amp; Lowndes</div>
+    <div class="book-row"><span class="book-stars">**** </span> <span class="book-title">Gengangere</span> by Henrik Ibsen</div>
+    <div class="book-row"><span class="book-stars">***  </span> <span class="book-title">Startup-käsikirja</span> by Timo Ahopelto <span class="book-note">"pretty basic."</span></div>
+    <div class="book-row"><span class="book-stars">***  </span> <span class="book-title">Det blåøyde riket: Norske tillitspatologier</span> by Nina Witoszek</div>
+    <div class="book-row"><span class="book-stars">***  </span> <span class="book-title">The 48 Laws of Power</span> by Robert Greene</div>
+    <div class="book-row"><span class="book-stars">***  </span> <span class="book-title">No Bullsh*t Change</span> by Chris Hirst</div>
+    <div class="book-row"><span class="book-stars">**   </span> <span class="book-title">It Ends with Us</span> by Colleen Hoover</div>
+    <div class="book-row"><span class="book-stars">**   </span> <span class="book-title">Demokrati i trøbbel</span> by Bård Larsen</div>
+    <div class="book-row"><span class="book-stars">**   </span> <span class="book-title">The Art of Seduction</span> by Robert Greene</div>
+    <div class="book-row"><span class="book-stars">     </span> <span class="book-title">Fundraising</span> by Ryan Breslow</div>
+    <div class="book-row"><span class="book-stars">     </span> <span class="book-title">New Thought Super Pack #1</span> by Warren Lapine</div>
+  </div>
+
+  <hr class="rainbow">
+
+  <!-- WALL OF CAKES -->
+  <div class="panel" style="background:#cff;">
+    <h3>* THE WALL OF CAKES * &nbsp; <span class="blink" style="color:#f00;">*</span></h3>
+    <p>A few of the brands we've fed!! 🎂🎂🎂</p>
+    <p style="font-size:18px;">
+      <a href="https://sphinxhq.com" target="_blank">sphinxhq.com</a> &middot;
+      <a href="https://cherry.vc" target="_blank">cherry.vc</a> &middot;
+      <a href="https://rippling.com" target="_blank">rippling.com</a> &middot;
+      <a href="https://monk.com" target="_blank">monk.com</a> &middot;
+      <a href="https://archy.com" target="_blank">archy.com</a> &middot;
+      <a href="https://browserbase.com" target="_blank">browserbase.com</a> &middot;
+      <a href="https://deel.com" target="_blank">deel.com</a> &middot;
+      <a href="https://f.inc" target="_blank">f.inc</a>
+    </p>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="panel" style="background:#ffd0d0;">
+    <h3>* CONTACT ME!!! *
+      <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/mailkitten.gif" alt="email" style="vertical-align:middle;">
+    </h3>
+    <ul class="plain">
+      <li>Email: <a href="mailto:cwlindholm@gmail.com">cwlindholm@gmail.com</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/william-daymaker/" target="_blank">linkedin.com/in/william-daymaker</a></li>
+      <li>X: <a href="https://x.com/daymakerguy" target="_blank">x.com/daymakerguy</a></li>
+      <li>Goodreads: <a href="https://www.goodreads.com/user/show/197156149-william-lindholm" target="_blank">goodreads.com/.../william-lindholm</a></li>
+    </ul>
+    <p class="center"><a href="mailto:cwlindholm@gmail.com">
+      <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/emailme.gif" alt="email me!" border="0">
+    </a></p>
+  </div>
+
+  <hr class="flames">
+
+  <!-- COUNTER -->
+  <p>
+    <b style="color:#ffff00;">YOU ARE VISITOR NUMBER:</b><br>
+    <span class="counter">00001998</span><br>
+    <span class="small" style="color:#fff;">since 1998 ;)</span>
+  </p>
+
+  <p>
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/construction.gif" alt="under construction">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/underconstruction.gif" alt="under construction" height="40">
+    <img src="https://cdn.jsdelivr.net/gh/divshot/geo-bootstrap@master/img/test/construction.gif" alt="under construction">
+  </p>
+
+  <p>
+    <a class="return" href="./index.html">&laquo; BACK TO THE 21ST CENTURY &raquo;</a>
+  </p>
+
+  <div class="signoff">
+    <p>
+      <span class="blink">*</span>
+      &copy; 1998 William Lindholm. ALL RIGHTS RESERVED.
+      <span class="blink">*</span>
+    </p>
+    <p class="small">
+      Best viewed in <b>Netscape Navigator 4.0</b> or higher at <b>800x600</b>.<br>
+      This page is a member of the <b>Cake WebRing</b>.<br>
+      Powered by GeoBootstrap. Not affiliated with GeoCities (RIP).
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>
